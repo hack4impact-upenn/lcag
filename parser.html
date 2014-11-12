@@ -1,0 +1,44 @@
+<html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: "exampledata2.txt",
+        dataType: "text",
+        success: function(data, textStatus, jqXHR) {processData(data, textStatus, jqXHR);}
+     });
+});
+
+function processData(allText, textStatus, jqXHR) {
+    var allTextLines = allText.split(/\r\n|\n/);
+    var headers = allTextLines[0].split(/\t/);
+    var lines = [];
+
+    for (var i=1; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(/\t/);
+        var usefulData = false;
+        for (var x = 1; x < data.length; x++) {
+            if (data[x] != "") {
+                usefulData = true;
+            }
+        }
+        if (data.length == headers.length && data[0] != "" && usefulData) {
+            var tarr = [];
+            for (var j=0; j<headers.length; j++) {
+                tarr.push(headers[j]+":"+data[j]);
+                console.log(headers[j]+":"+data[j]);
+            }
+            lines.push(tarr);
+        }
+    }
+    // lines contains all the data, access a disposition with lines["Disposition"]
+    // example: x = lines["Secure Custody"] will give you the object with all the secure custody data
+    // x["Annual Cost"] will give you $424
+    // note: weird rounding shenanigans in the original file, ask client?
+}
+</script>
+
+</html>

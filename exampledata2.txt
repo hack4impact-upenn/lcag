@@ -1,0 +1,10 @@
+Disposition	Daily Cost	Annual Cost	Cost of Full Course of Treatment
+Secure Custody (Juvenile Prison)	$424	"$154,862"	
+Probation (Community Supervision)	$10	"$3,530"	
+Nonsecure Custody (Group Home)	$136	"$49,585"	
+Functional Family Therapy (delivered in conjunction with probation)			"$2,380"
+Multi-Systemic Therapy (delivered in conjunction with probation)			"$4,364"
+			
+			
+All figures are in 2010 dollars			
+"Source: Louisiana Legislative Auditor, ""Performance Audit: Office of Juvenile Justice,"" (December 29, 2010) available at http://app.lla.state.la.us/PublicReports.nsf/627F425D392105E086257807006A156A/$FILE/0001B35F.pdf"			
