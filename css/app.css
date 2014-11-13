@@ -1,0 +1,157 @@
+body {
+	font-family: "Franklin Gothic Book";
+}
+
+.name img {
+	width: auto;
+	height: 80px;
+}
+
+.top-bar {
+	height: 80px;
+	background-color: #174154;
+}
+
+.right .active a {
+	height: 80px;
+	width: 70px;
+}
+
+.right .active {
+	margin-right: 1px;
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button){
+	line-height: 80px;
+	background: #355870;
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button):hover {
+	background: #F15E26;
+}
+
+.top-bar-section ul li > a {
+	font-size: 1rem;
+	font-family: "Franklin Gothic Book";
+	text-align: center;
+}
+
+#results {
+	margin-top: 30px;
+	margin-bottom: 20px;
+	height: 100px;
+	background: #EEE;
+	-moz-box-shadow:    inset 0 1px 2px #000000;
+	-webkit-box-shadow: inset 0 1px 2px #000000;
+	box-shadow:         inset 0 1px 2px #000000;
+	color: #fff;
+	line-height: 100px;
+	text-align: center;
+}
+
+.sentence {
+	border-style: solid;
+    border-width: 2px;
+    border-color: #174154;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+.sentence .header {
+	height: 30px;
+	background: #174154;
+	color: #FFF;
+	font-family: "Franklin Gothic Book";
+	font-size: 1.2rem;
+	line-height: 30px;
+	padding-left: 20px;
+}
+
+.row {
+	max-width: 95%;
+}
+
+.addsub img {
+	width: 20px;
+	height: 20px;
+}
+
+.row .dispositions {
+	margin: 10px;
+	font-size: 1rem;
+	line-height: 30px;	
+	height: 30px;
+}
+
+select {
+	font-size: 1rem;
+	border: 0px;
+	background-color: #FFF;
+}
+
+.row .dispadd {
+	margin: 10px;
+	color: #BBB;
+	font-size: 0.5rem;
+	font-style: italic;
+	height: 30px;
+	line-height: 30px;
+}
+
+.row .collapse {
+	margin: 0px;
+}
+
+.row .total {
+	height: 30px;
+	line-height: 30px;
+	margin: 10px;
+	background-color: #BBB;
+	color: #FFF;
+	font-size: 1.3rem;
+	text-align: right;
+	padding-right: 20px;
+	font-style: italic;
+}
+
+.button {
+	border-radius: 3px;
+	background: #F15E26;
+	font-size: 0.8rem;
+}
+
+.button:hover {
+	background: #FD9E76;
+}
+
+input[type=text] {
+	font-size: 1.3rem;
+	text-align: center;
+	color: #F15E26;
+	border: 2px solid;
+	border-color: #174154;
+	border-radius: 5px;
+	height: auto;
+	width: 25px;
+	height: 25px;
+}
+
+span.postfix {
+	border:0px;
+	font-size: 1rem;
+	background-color: #FFF;
+	background: #FFF;
+	overflow: visible;
+	color: #174154;
+	line-height: 25px;
+}
+
+.addsub:hover {
+	cursor: pointer;
+}
+
+
+
+
+
