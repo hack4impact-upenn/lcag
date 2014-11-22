@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 });
 
-var lines = [];
+var lines = {};
 
 function processData(allText, textStatus, jqXHR) {
 	var allTextLines = allText.split(/\r\n|\n/);
@@ -26,12 +26,15 @@ function processData(allText, textStatus, jqXHR) {
 			}
 		}
 		if (data.length == headers.length && data[0] != "" && usefulData) {
-			var tarr = [];
-			for (var j=0; j<headers.length; j++) {
-				tarr[headers[j]] = data[j];
-				console.log(headers[j]+":"+data[j]);
+			lines[data[0]] = {};
+			for (var j=1; j<headers.length; j++) {
+				lines[data[0]][headers[j]] = data[j];
+		//		tarr[headers[j]] = data[j];
+		//		console.log(headers[j]+":"+data[j]);
 			}
-			lines.push(tarr);
+		//	console.log(tarr);
+		//	lines[data[0]] = tarr;
+			console.log("lines: " + lines[data[0]]);
 			// lines = tarr;
 
 			// FIX LINES SO INDEX IS DISPOSITION
@@ -52,7 +55,7 @@ function processData(allText, textStatus, jqXHR) {
 			var options = [];
 			jQuery.each(lines, function(index, value) {
 
-				options.push($("<option>").attr("value", value["Disposition"]).html(value["Disposition"]));
+				options.push($("<option>").attr("value", index).html(index));
 			});
 			console.log("********");
 			console.log(options);
