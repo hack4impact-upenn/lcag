@@ -49,6 +49,11 @@ body {
 	text-align: center;
 }
 
+svg {
+	width: 80%;
+	min-width: 400px;
+}
+
 .sentence {
 	border-style: solid;
     border-width: 2px;

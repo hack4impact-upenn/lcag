@@ -26,3 +26,7 @@
 .coloredDiv {
   height:20px; width:20px; float:left;
 }
+
+circle {
+  fill: #900;
+}

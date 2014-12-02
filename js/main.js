@@ -12,6 +12,7 @@ $(document).ready(function() {
 });
 
 var lines = {};
+var totals = [];
 
 function processData(allText, textStatus, jqXHR) {
 	var allTextLines = allText.split(/\r\n|\n/);
@@ -82,7 +83,7 @@ function createSentence(next_sentence) {
 				)
 			.append(
 				$("<div>").attr("class", "row total")
-				.html("TOTAL: 120, 209")
+				.html("TOTAL : 0")
 				)
 			);
 
@@ -167,6 +168,7 @@ function createEverything() {
 		addingDispositions();
 		});
 
+	// deleting sentences
 	$(".delete").click(function(event) {
 		var sentence_number = $(event.target).closest(".sentence").attr("id")
 
@@ -176,6 +178,14 @@ function createEverything() {
 				break;
 			}
 		}
+
+		for (var i = 0; i < totals.length; i++) {
+			if (totals[i].sentenceID == parseInt(sentence_number)) {
+				totals.splice(i, 1);
+				break;
+			}
+		}
+
 		reloadSentences();
 		addingDispositions();
 		});
@@ -185,6 +195,7 @@ function createEverything() {
 
 	// adding dispositions
 	function addingDispositions() { 
+
 
 		$(".add").click(function(event) {
 
@@ -326,9 +337,29 @@ function createEverything() {
 
 			console.log(total);
 
+			// ARRAY LIST OF OBJECTS
+			// OBJECT -> TWO PROPERTIES (sentenceID, sentenceTotal)
+
+			var sentence_number = $(event.target).closest(".sentence").attr("id")
+
+			boolean changed = false;
+			for (var i = 0; i < totals.length; i++) {
+				if (totals[i].sentenceID == parseInt(sentence_number)) {
+					totals[i].sentenceTotal = total;
+					changed = true;
+				}
+			}
+
+			if (!changed) {
+				totals.push({sentenceID: parseInt(sentence_number), sentenceTotal: total});
+			}
+
+
 			$(event.target).closest(".sentence").children(".total").html(
 				"TOTAL : " + total
 				);
+
+			updateResults(totals);
 
 		}
 
