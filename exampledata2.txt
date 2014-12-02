@@ -1,9 +1,9 @@
 Disposition	Daily Cost	Annual Cost	Cost of Full Course of Treatment
-Secure Custody (Juvenile Prison)	$424	"$154,862"	
-Probation (Community Supervision)	$10	"$3,530"	
-Nonsecure Custody (Group Home)	$136	"$49,585"	
-Functional Family Therapy (delivered in conjunction with probation)			"$2,380"
-Multi-Systemic Therapy (delivered in conjunction with probation)			"$4,364"
+Secure Custody (Juvenile Prison)	$424	$154862	
+Probation (Community Supervision)	$10	$3530	
+Nonsecure Custody (Group Home)	$136	$49585	
+Functional Family Therapy (delivered in conjunction with probation)			$2380
+Multi-Systemic Therapy (delivered in conjunction with probation)			$4364
 			
 			
 All figures are in 2010 dollars			

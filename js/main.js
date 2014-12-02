@@ -45,143 +45,296 @@ function processData(allText, textStatus, jqXHR) {
 		// example: x = lines["Secure Custody"] will give you the object with all the secure custody data
 		// x["Annual Cost"] will give you $424
 		// note: weird rounding shenanigans in the original file, ask client?
+}
+
+// creating a new sentence
+function createSentence(next_sentence) {
+
+	var name = "SENTENCE CHOICE " + next_sentence.toString();
+	var new_sentence = 
+		$("<div>").attr("class", "large-6 columns")
+		.append(
+			$("<div>").attr("class", "sentence").attr("id", next_sentence)
+			.append(
+				$("<div>").attr("class", "header").html(name)
+				.append(
+					$("<img>").attr("src", "img/delete.png").attr("class", "delete")
+					)
+				)
+			.append(
+				$("<div>").attr("class", "new")
+				)
+			.append(
+				$("<div>").attr("class", "row dispadd")
+				.append(
+					$("<div>").attr("class", "small-1 columns")
+					.append(
+						$("<div>").attr("class", "addsub add")
+						.append(
+							$("<img>").attr("src", "img/add.jpg")
+							)
+						)
+					)
+				.append(
+					$("<div>").attr("class", "small-11 columns")
+					.html("...add disposition")
+					)
+				)
+			.append(
+				$("<div>").attr("class", "row total")
+				.html("TOTAL: 120, 209")
+				)
+			);
+
+	return new_sentence;
+}
+
+function createEverything() {
+
+	var sentences = [];
+
+	var sentence_button =
+		$("<div>").attr("class", "large-6 columns")
+		.append(
+			$("<a>").attr("class", "button expand")
+			.html("ADD A SENTENCE CHOICE")
+			);
+
+
+
+	var empty_column = $("<div>").attr("class", "large-6 columns");
+
+	var next_sentence = 1;
+	
+	console.log("start: " + sentences.length);
+
+	// INITIAL SENTENCE DISPLAY
+	sentences.push({id: next_sentence, sent: createSentence(next_sentence)});
+	next_sentence++;
+	sentences.push({id: next_sentence, sent: createSentence(next_sentence)});
+	next_sentence++;
+	reloadSentences();
+
+	console.log("setup: " + sentences.length);
+
+	function reloadSentences() {
+		// clear html
+		$(".input").html("");
+
+		// redisplay (let's see what happens)
+		if (sentences.length % 2 == 0) {
+			for (var i = 0; i < sentences.length/2; i++) {
+				$(".input")
+				.append(
+					$("<div>").attr("class", "row")
+					.append(sentences[i*2].sent)
+					.append(sentences[i*2+1].sent)
+					)
+			}
+			$(".input")
+			.append(
+				$("<div>").attr("class", "row")
+				.append(sentence_button)
+				.append(empty_column)
+				)
+		}
+		else {
+			for (var i = 0; i < sentences.length/2 - 1; i++) {
+				console.log("got here: " + sentences.length);
+				$(".input")
+				.append(
+					$("<div>").attr("class", "row")
+					.append(sentences[i*2].sent)
+					.append(sentences[i*2+1].sent)
+					)
+			}
+			$(".input")
+			.append(
+				$("<div>").attr("class", "row")
+				.append(sentences[sentences.length-1].sent)
+				.append(sentence_button)
+				)
+		}
+
+		// adding sentences
+	$(".expand").click(function(event) {
+		sentences.push({id: next_sentence, sent: createSentence(next_sentence)});
+		next_sentence++;
+
+		console.log("add: " + sentences.length);
+
+		reloadSentences();
+		addingDispositions();
+		});
+
+	$(".delete").click(function(event) {
+		var sentence_number = $(event.target).closest(".sentence").attr("id")
+
+		for (var i = 0; i < sentences.length; i++) {
+			if (sentences[i].id == parseInt(sentence_number)) {
+				sentences.splice(i, 1);
+				break;
+			}
+		}
+		reloadSentences();
+		addingDispositions();
+		});
 	}
+	addingDispositions();
+}
 
-
-	function createEverything() {
+	// adding dispositions
+	function addingDispositions() { 
 
 		$(".add").click(function(event) {
 
-			var options = [];
-			jQuery.each(lines, function(index, value) {
-
-				options.push($("<option>").attr("value", index).html(index));
-			});
-			console.log("********");
-			console.log(options);
-			console.log("********");
-
-			$(event.target).closest(".dispadd").prev(".new").append(
-
-				$("<div>").attr("class", "row dispositions")
-				.append(
-					$("<div>").attr("class", "small-1 columns").append(
-						$("<div>").attr("class", "addsub sub").append(
-							$("<img>").attr("src", "img/sub.jpg")
+		// load options for disposition
+		var options = [];
+		jQuery.each(lines, function(index, value) {
+			options.push($("<option>").attr("value", index).html(index));
+		});
+		// console.log("********");
+		// console.log(options);
+		// console.log("********");
+		
+		// new disposition object
+		var new_disposition = $("<div>").attr("class", "row dispositions")
+			.append(
+				$("<div>").attr("class", "small-1 columns").append(
+					$("<div>").attr("class", "addsub sub").append(
+						$("<img>").attr("src", "img/sub.jpg")
+						)
+					)
+				)
+			.append(
+				$("<div>").attr("class", "small-5 columns").append(
+					$("<select>").attr("class", "opt")
+					.append($("<option>").attr("value", ""))
+					.append(options)
+					)
+				)
+			.append(
+				$("<div>").attr("class", "small-2 columns ov").append(
+					$("<div>").attr("class", "row collapse").append(
+						$("<div>").attr("class", "small-5 columns").append(
+							$("<input>").attr("class", "years").attr("type", "text").attr("placeholder", "")
+							)
+						).append(
+						$("<div>").attr("class", "small-7 columns").append(
+							$("<span>").attr("class", "postfix").html("YEARS")
 							)
 						)
 					)
-				.append(
-					$("<div>").attr("class", "small-5 columns").append(
-						$("<select>").attr("class", "opt")
-						.append($("<option>").attr("value", ""))
-						.append(options)
+				)
+			.append(
+				$("<div>").attr("class", "small-2 columns ov").append(
+					$("<div>").attr("class", "row collapse").append(
+						$("<div>").attr("class", "small-5 columns").append(
+							$("<input>").attr("class", "months").attr("type", "text").attr("placeholder", "")
+							)
+						).append(
+						$("<div>").attr("class", "small-7 columns").append(
+							$("<span>").attr("class", "postfix").html("MONTHS")
+							)
 						)
 					)
-				.append(
-					$("<div>").attr("class", "small-2 columns").append(
-						$("<div>").attr("class", "row collapse").append(
-							$("<div>").attr("class", "small-5 columns").append(
-								$("<input>").attr("class", "years").attr("type", "text").attr("placeholder", "")
-								)
-							).append(
-							$("<div>").attr("class", "small-7 columns").append(
-								$("<span>").attr("class", "postfix").html("YEARS")
-								)
+				)
+			.append(
+				$("<div>").attr("class", "small-2 columns ov").append(
+					$("<div>").attr("class", "row collapse").append(
+						$("<div>").attr("class", "small-5 columns").append(
+							$("<input>").attr("class", "days").attr("type", "text").attr("placeholder", "")
 							)
+						).append(
+						$("<div>").attr("class", "small-7 columns").append(
+							$("<span>").attr("class", "postfix").html("DAYS")
 							)
+						)
 					)
-				.append(
-					$("<div>").attr("class", "small-2 columns").append(
-						$("<div>").attr("class", "row collapse").append(
-							$("<div>").attr("class", "small-5 columns").append(
-								$("<input>").attr("class", "months").attr("type", "text").attr("placeholder", "")
-								)
-							).append(
-							$("<div>").attr("class", "small-7 columns").append(
-								$("<span>").attr("class", "postfix").html("MONTHS")
-								)
-							)
-							)
-					)
-				.append(
-					$("<div>").attr("class", "small-2 columns").append(
-						$("<div>").attr("class", "row collapse").append(
-							$("<div>").attr("class", "small-5 columns").append(
-								$("<input>").attr("class", "days").attr("type", "text").attr("placeholder", "")
-								)
-							).append(
-							$("<div>").attr("class", "small-7 columns").append(
-								$("<span>").attr("class", "postfix").html("DAYS")
-								)
-							)
-							)
-					)
-
-
 				);
 
+		// add new disposition object
+		$(event.target).closest(".dispadd").prev(".new").append(new_disposition);
+
+		// remove selected disposition object
+		$(".sub").click(function(event) {
+			$(event.target).closest(".dispositions").remove();
+			});
+
+		// call updateTotal() whenever there is an input change
+		$(".opt").change(function(event) {
+			updateTotal(event);
+			});
+		$(".years").keyup(function(event) {
+			updateTotal(event);
+			});
+		$(".months").keyup(function(event) {
+			updateTotal(event);
+			});
+		$(".days").keyup(function(event) {
+			updateTotal(event);
+			});
+
+		// function for updating sentence totals
+		function updateTotal(event) {	
+			var total = 0;
+
+			$(event.target).closest(".new").children(".dispositions").each(function() {	
+
+				var disposition = $(this).find(".opt option:selected").text();
+
+				if (disposition != "") {
+
+					console.log(lines[disposition]);
+
+					var days = parseFloat(lines[disposition]["Daily Cost"].substring(1));
+					var months = parseFloat(lines[disposition]["Daily Cost"].substring(1)) * 30;
+					var years = parseFloat(lines[disposition]["Annual Cost"].substring(1));
+					var full = parseFloat(lines[disposition]["Cost of Full Course of Treatment"].substring(1));
+
+					console.log("FULL : " + full);
+
+					console.log(days + "*" + months + "*" + years);
+
+					console.log("day: " + $(this).find(".days").val());
+
+					var numDays = parseInt($(this).find(".days").val());
+					var numMonths = parseInt($(this).find(".months").val());
+					var numYears = parseInt($(this).find(".years").val());
 
 
-
-$(".sub").click(function(event) {
-	$(event.target).closest(".dispositions").remove();
-});
-
-$(".opt").change(function(event) {
-	updateTotal(event);
-});
-
-$(".years").keyup(function(event) {
-	updateTotal(event);
-});
-$(".months").keyup(function(event) {
-	updateTotal(event);
-});
-$(".days").keyup(function(event) {
-	updateTotal(event);
-});
+					if (isNaN(full)) {
+						if (!isNaN(numDays)) {
+							total += days * numDays;
+						}
+						if (!isNaN(numMonths)) {
+							total += months * numMonths;
+						}
+						if (!isNaN(numYears)) {
+							total += years * numYears;
+						}
+					}
+					else {
+						$(this).find(".ov").css("visibility", "hidden");
+						total += full;
+					}
 
 
-function updateTotal(event) {	
-	var total = 0;
+				}
 
-	$(event.target).closest(".new").children(".dispositions").each(function() {	
+				});
 
-		var disposition = $(this).find(".opt option:selected").text();
+			console.log(total);
 
-		console.log(lines[disposition]);
+			$(event.target).closest(".sentence").children(".total").html(
+				"TOTAL : " + total
+				);
 
-		var days = parseFloat(lines[disposition]["Daily Cost"].substring(1));
-		var months = parseFloat(lines[disposition]["Daily Cost"].substring(1)) * 30;
-		var years = parseFloat(lines[disposition]["Annual Cost"].substring(1));
-
-		console.log(days + "*" + months + "*" + years);
-
-		var numDays = parseFloat($(this).children(".days")[0]);
-		var numMonths = parseFloat($(this).children(".months")[0]);
-		var numYears = parseFloat($(this).children(".years")[0]);
-
-		total = days * numDays + months * numMonths + years * numYears;
-
-		
+		}
 
 
 	});
 
-	console.log(total);
-
-	$(event.target).closest(".sentence").children("total").html(
-		"Total: " + total
-		);
-
-
-
-}
-
-
-});
-
-
-
+	
+	
 }

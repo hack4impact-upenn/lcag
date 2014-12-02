@@ -68,6 +68,14 @@ body {
 	padding-left: 20px;
 }
 
+.sentence .header img {
+	height: 25px;
+	width: 25px;
+	line-height: 30px;
+	float: right;
+	cursor: pointer;
+}
+
 .row {
 	max-width: 95%;
 }
@@ -119,6 +127,8 @@ select {
 	border-radius: 3px;
 	background: #F15E26;
 	font-size: 0.8rem;
+	margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .button:hover {
