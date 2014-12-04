@@ -337,12 +337,9 @@ function createEverything() {
 
 			console.log(total);
 
-			// ARRAY LIST OF OBJECTS
-			// OBJECT -> TWO PROPERTIES (sentenceID, sentenceTotal)
-
 			var sentence_number = $(event.target).closest(".sentence").attr("id")
 
-			boolean changed = false;
+			var changed = false;
 			for (var i = 0; i < totals.length; i++) {
 				if (totals[i].sentenceID == parseInt(sentence_number)) {
 					totals[i].sentenceTotal = total;

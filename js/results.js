@@ -1,26 +1,71 @@
 
 var svg = d3.select("#graph").append("svg");
 
-// draw line
+// svg groups
+var circle_svg = svg.append("g");
+var id_svg = svg.append("g");
+var value_svg = svg.append("g");
 
-// TODO NEXT TIME - READ FIRST
-// 
+// TO DO - CHANGE COLORS AND ADD COST TIMELINE
+// TO DO - REMOVE
+// google anaytics
 
 function updateResults(totals) {
 
-  var circle = svg.selectAll("circle").data([32, 57, 112, 293]);
+  var temparr = [];
+  var max = 0;
 
-  var circleEnter = circle.enter().append("circle");
+  for (var i = 0; i < totals.length; i ++) {
+    temparr[i] = totals[i].sentenceTotal;
+    if (max < temparr[i]) {
+      max = temparr[i];
+    }
+  }
 
-  var linear = d3.scale.linear().range([0, 100]).domain([0, 32, 57, 112, 293]);
+  var svg_width = $("svg").width() - 40;
 
-  circleEnter.attr("cy", 50);
-  circleEnter.attr("r", 10);
-  circleEnter.attr("cx", function(d) {
-    return linear(d);
-  });
+  var linear = d3.scale.linear().range([40, svg_width]).domain([0, max]);
 
-  console.log(total + "****");
+  circle_svg.selectAll("circle").data(totals).enter().append("circle");
+
+  circle_svg.selectAll("circle")
+    .attr("cy", 50)
+    .attr("r", 15)
+    .attr("cx", function(d) {
+      return linear(d.sentenceTotal);
+      });
+
+  id_svg.selectAll("text").data(totals).enter().append("text");
+
+  id_svg.selectAll("text")
+    .attr("y", 55)
+    .attr("fill", "white")
+    // font-family
+    // font-size in pixels
+    .attr("font-size", 15)
+    .attr("text-anchor", "middle")
+    .attr("x", function(d) {
+      return linear(d.sentenceTotal);
+      })
+    .text(function(d) {
+      return d.sentenceID;
+    });
+
+  value_svg.selectAll("text").data(totals).enter().append("text");
+
+  value_svg.selectAll("text")
+    .attr("y", 30)
+    // font-family
+    // font-size in pixels
+    .attr("font-size", 15)
+    .attr("text-anchor", "middle")
+    .attr("x", function(d) {
+      return linear(d.sentenceTotal);
+      })
+    .text(function(d) {
+      return "$" + d.sentenceTotal;
+    });
+
 }
 
 // var testData = [
@@ -46,5 +91,3 @@ function updateResults(totals) {
 //         }
 
 //         timelineCircle();
-
-

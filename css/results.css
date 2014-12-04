@@ -28,5 +28,10 @@
 }
 
 circle {
-  fill: #900;
+  fill: #F15E26;
+}
+
+svg {
+  width: 80%;
+  min-width: 400px;
 }
