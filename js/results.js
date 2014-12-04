@@ -6,67 +6,77 @@ var circle_svg = svg.append("g");
 var id_svg = svg.append("g");
 var value_svg = svg.append("g");
 
-// TO DO - CHANGE COLORS AND ADD COST TIMELINE
-// TO DO - REMOVE
-// google anaytics
+// ***********************************************************
+// TO DO
+// 1. cost timeline
+// 2. sentence summary/compare (Thomas' idea)
+// 3. aesthetic quirks - colors, responsiveness
+// 4. google analytics
+// ***********************************************************
 
+// updates svg to reflect sentence totals on a cost timeline
 function updateResults(totals) {
 
-  var temparr = [];
-  var max = 0;
+	console.log("Updating results | Number of sentence totals: " + totals.length);
 
-  for (var i = 0; i < totals.length; i ++) {
-    temparr[i] = totals[i].sentenceTotal;
-    if (max < temparr[i]) {
-      max = temparr[i];
-    }
-  }
+  	// DISPLAY SOMETHING AS DEFAULT (WORK ON THIS AFTER)
+  	// if there are no sentence totals, clear svg
+  	if (totals.length == 0) {
+  		console.log("No totals.");
+  		$("svg").html("");
+  		circle_svg = svg.append("g");
+  		id_svg = svg.append("g");
+  		value_svg = svg.append("g");
+  		return;
+  	}
 
-  var svg_width = $("svg").width() - 40;
+  	var max = 0; // find max value for the linear scale
+  	for (var i = 0; i < totals.length; i ++) {
+  		if (max < totals[i].sentenceTotal) {
+  			max = totals[i].sentenceTotal;
+  		}
+  	}
 
-  var linear = d3.scale.linear().range([40, svg_width]).domain([0, max]);
+  	// set linear scale for display (NEEDS TO BE REPONSIVE)
+  	var svg_width = $("svg").width() - 40;
+  	var linear = d3.scale.linear().range([40, svg_width]).domain([0, max]);
 
-  circle_svg.selectAll("circle").data(totals).enter().append("circle");
+  	// create svg circles
+  	circle_svg.selectAll("circle").data(totals).enter().append("circle");
+  	circle_svg.selectAll("circle")
+  		.attr("cy", 50) // y position
+  		.attr("r", 15) // radius
+  		.attr("cx", function(d) { // x position determined by total
+  			return linear(d.sentenceTotal);
+  		});
 
-  circle_svg.selectAll("circle")
-    .attr("cy", 50)
-    .attr("r", 15)
-    .attr("cx", function(d) {
-      return linear(d.sentenceTotal);
-      });
+  	// create svg text for sentence id
+  	id_svg.selectAll("text").data(totals).enter().append("text");
+  	id_svg.selectAll("text")
+  		.attr("y", 55)
+  		.attr("fill", "white")
+		.attr("font-size", 15)
+		.attr("text-anchor", "middle")
+		.attr("x", function(d) {
+			return linear(d.sentenceTotal);
+		}).text(function(d) { // set text using sentenceID property
+			return d.sentenceID;
+		});
 
-  id_svg.selectAll("text").data(totals).enter().append("text");
-
-  id_svg.selectAll("text")
-    .attr("y", 55)
-    .attr("fill", "white")
-    // font-family
-    // font-size in pixels
-    .attr("font-size", 15)
-    .attr("text-anchor", "middle")
-    .attr("x", function(d) {
-      return linear(d.sentenceTotal);
-      })
-    .text(function(d) {
-      return d.sentenceID;
-    });
-
-  value_svg.selectAll("text").data(totals).enter().append("text");
-
-  value_svg.selectAll("text")
-    .attr("y", 30)
-    // font-family
-    // font-size in pixels
-    .attr("font-size", 15)
-    .attr("text-anchor", "middle")
-    .attr("x", function(d) {
-      return linear(d.sentenceTotal);
-      })
-    .text(function(d) {
-      return "$" + d.sentenceTotal;
-    });
-
+	// create svg text for sentence total
+	value_svg.selectAll("text").data(totals).enter().append("text");
+	value_svg.selectAll("text")
+		.attr("y", 30)
+		.attr("font-size", 15)
+		.attr("text-anchor", "middle")
+		.attr("x", function(d) {
+			return linear(d.sentenceTotal);
+		}).text(function(d) {
+			return "$" + d.sentenceTotal;
+		});
 }
+
+// TO DELETE - USE FOR COLORS
 
 // var testData = [
 // {times: [{"starting_time": 80, "ending_time": 200}, {"starting_time": 150, "ending_time": 200}]},
