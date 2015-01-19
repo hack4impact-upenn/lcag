@@ -3,13 +3,14 @@ body {
 }
 
 .name img {
-	width: auto;
+	/*width: auto;*/
 	height: 80px;
 }
 
 .top-bar {
 	height: 80px;
 	background-color: #174154;
+	min-width: 400px;
 }
 
 .right .active a {
@@ -37,9 +38,9 @@ body {
 }
 
 #results {
-	margin-top: 30px;
+	margin-top: 15px;
 	margin-bottom: 20px;
-	height: 100px;
+	height: 105px;
 	background: #EEE;
 	-moz-box-shadow:    inset 0 1px 2px #000000;
 	-webkit-box-shadow: inset 0 1px 2px #000000;
@@ -83,27 +84,85 @@ body {
 .addsub img {
 	width: 20px;
 	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
 }
 
 .row .dispositions {
-	margin: 10px;
+	margin: 5px;
 	font-size: 1rem;
 	line-height: 30px;	
-	height: 30px;
+	/*height: 30px;*/
 }
 
-select {
+.sentence select {
 	font-size: 1rem;
 	border: 0px;
 	background-color: #FFF;
 }
 
+#comparison {
+	margin-top: 25px;
+}
+
+.compare {
+	margin-top: 15px;
+	/*height: 20px;*/
+	line-height: 20px;
+}
+
+.compare select {
+	font-size: 1rem;
+	border: 0px;
+	border-bottom: 1px solid #EEE;
+	background-color: #FFF;
+}
+
+#diff {
+	color: #F15E26;
+}
+
+#first {
+	color: #FFF;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	display: inline-block;
+	background-color: #F15E26;
+	border-radius: 15px;
+}
+
+#second {
+	color: #FFF;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	display: inline-block;
+	background-color: #F15E26;
+	text-align: center;
+	border-radius: 15px;
+}
+
+.compareresults {
+	font-size: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.row .dispositions {
+	margin: 5px;
+	font-size: 1rem;
+	line-height: 30px;	
+	/*height: 30px;*/
+}
+
 .row .dispadd {
-	margin: 10px;
+	margin: 5px;
 	color: #BBB;
 	font-size: 0.5rem;
 	font-style: italic;
-	height: 30px;
+	/*height: 30px;*/
 	line-height: 30px;
 }
 
@@ -136,7 +195,7 @@ select {
 }
 
 input[type=text] {
-	font-size: 1.3rem;
+	font-size: 12px;
 	text-align: center;
 	color: #F15E26;
 	border: 2px solid;
@@ -145,11 +204,25 @@ input[type=text] {
 	height: auto;
 	width: 25px;
 	height: 25px;
+	padding: 0px;
 }
+
+.small-5 {
+	min-width: 25px;
+}
+
+.small-6 {
+	min-width: 280px;
+}
+
+.small-1 {
+	min-width: 25px;
+}
+
 
 span.postfix {
 	border:0px;
-	font-size: 1rem;
+	font-size: 12px;
 	background-color: #FFF;
 	background: #FFF;
 	overflow: visible;
@@ -160,6 +233,32 @@ span.postfix {
 .addsub:hover {
 	cursor: pointer;
 }
+
+#me {
+	background-color: #666b72;
+	height: 40px;
+	text-align: right;
+	padding-right: 100px;
+	padding-top: 8px;
+	color: #fff;
+	position:fixed;
+   	left:0px;
+   	bottom:0px;
+   	width: 100%;
+   	font-size: 10px;
+}
+
+#me img {
+	height: 25px;
+	width: auto;
+	top: 0px;
+}
+
+
+
+
+
+
 
 
 

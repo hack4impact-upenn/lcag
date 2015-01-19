@@ -49,6 +49,16 @@ function processData(allText, textStatus, jqXHR) {
 
 function createEverything() {
 
+	// set up comparison section
+	$(".selection").append(
+		$("<select>").attr("class", "comparisonoptions").append(
+			$("<option>").attr("value", "0").attr("selected", "selected").attr("disabled", "disabled").html("Choose a sentence to compare."))
+		)
+	
+
+	addCompareOptions(1);
+	addCompareOptions(2);
+
 	// array to store sentence objects
 	var sentences = [];
 
@@ -119,6 +129,7 @@ function createEverything() {
 		$(".expand").click(function(event) {
 
 			sentences.push({id: next_sentence, sent: createSentence(next_sentence)});
+			addCompareOptions(next_sentence);
 			next_sentence++;
 
 			console.log("add: " + sentences.length);
@@ -133,6 +144,7 @@ function createEverything() {
 			// get id of sentence to be deleted
 			var sentence_number = $(event.target).closest(".sentence").attr("id")
 
+			deleteCompareOptions(parseInt(sentence_number));
 			// remove selected sentence from stored sentences
 			for (var i = 0; i < sentences.length; i++) {
 				if (sentences[i].id == parseInt(sentence_number)) {
@@ -225,48 +237,53 @@ function addingDispositions() {
 		.append(
 			$("<div>").attr("class", "small-5 columns").append(
 				$("<select>").attr("class", "opt")
-				.append($("<option>").attr("value", ""))
+				.append($("<option>").attr("selected", "selected").attr("disabled", "disabled").html("----------"))
 				.append(options)
 				)
 			)
+
 		.append(
-			$("<div>").attr("class", "small-2 columns ov").append(
-				$("<div>").attr("class", "row collapse").append(
-					$("<div>").attr("class", "small-5 columns").append(
-						$("<input>").attr("class", "years").attr("type", "text").attr("placeholder", "")
-						)
-					).append(
-					$("<div>").attr("class", "small-7 columns").append(
-						$("<span>").attr("class", "postfix").html("YEARS")
-						)
+			$("<div>").attr("class", "small-6 columns")
+				.append(
+					$("<div>").attr("class", "small-4 columns ov").append(
+						$("<div>").attr("class", "row collapse").append(
+							$("<div>").attr("class", "small-5 columns").append(
+								$("<input>").attr("class", "years").attr("type", "text").attr("placeholder", "")
+								)
+							).append(
+							$("<div>").attr("class", "small-7 columns").append(
+								$("<span>").attr("class", "postfix").html("YEARS")
+								)
+							)
+							)
 					)
+				.append(
+					$("<div>").attr("class", "small-4 columns ov").append(
+						$("<div>").attr("class", "row collapse").append(
+							$("<div>").attr("class", "small-5 columns").append(
+								$("<input>").attr("class", "months").attr("type", "text").attr("placeholder", "")
+								)
+							).append(
+							$("<div>").attr("class", "small-7 columns").append(
+								$("<span>").attr("class", "postfix").html("MONTHS")
+								)
+							)
+							)
 					)
-			)
-		.append(
-			$("<div>").attr("class", "small-2 columns ov").append(
-				$("<div>").attr("class", "row collapse").append(
-					$("<div>").attr("class", "small-5 columns").append(
-						$("<input>").attr("class", "months").attr("type", "text").attr("placeholder", "")
-						)
-					).append(
-					$("<div>").attr("class", "small-7 columns").append(
-						$("<span>").attr("class", "postfix").html("MONTHS")
-						)
+				.append(
+					$("<div>").attr("class", "small-4 columns ov").append(
+						$("<div>").attr("class", "row collapse").append(
+							$("<div>").attr("class", "small-5 columns").append(
+								$("<input>").attr("class", "days").attr("type", "text").attr("placeholder", "")
+								)
+							).append(
+							$("<div>").attr("class", "small-7 columns").append(
+								$("<span>").attr("class", "postfix").html("DAYS")
+								)
+							)
+							)
 					)
-					)
-			)
-		.append(
-			$("<div>").attr("class", "small-2 columns ov").append(
-				$("<div>").attr("class", "row collapse").append(
-					$("<div>").attr("class", "small-5 columns").append(
-						$("<input>").attr("class", "days").attr("type", "text").attr("placeholder", "")
-						)
-					).append(
-					$("<div>").attr("class", "small-7 columns").append(
-						$("<span>").attr("class", "postfix").html("DAYS")
-						)
-					)
-					)
+
 			);
 
 		// add new disposition object
@@ -293,6 +310,11 @@ function addingDispositions() {
 		$(".days").keyup(function(event) {
 			updateTotal($(event.target));
 		});
+
+		// $(event.target).closest(".dispadd").prev(".new").children(".dispositions").css("background", "yellow");
+
+		// updateTotal($(event.target).closest(".dispadd").prev(".new").children(".dispositions"));
+
 	});
 }
 
@@ -309,7 +331,9 @@ function updateTotal(targ) {
 
 		var disposition = $(this).find(".opt option:selected").text();
 
-		if (disposition != "") {
+		console.log("outside: " + disposition);
+
+		if (disposition != "----------") {
 
 			console.log(lines[disposition]);
 
@@ -369,8 +393,25 @@ function updateTotal(targ) {
 
 	// update html to reflect new total
 	targ.closest(".sentence").children(".total").html(
-		"TOTAL : $" + total
+		"TOTAL : $" + addCommas(total)
 		);
 
 	updateResults(totals);
+	updateComparison();
 }
+
+function addCommas(nStr)
+{
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+
+
